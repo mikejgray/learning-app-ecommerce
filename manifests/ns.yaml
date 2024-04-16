@@ -1,0 +1,7 @@
+# Namespace called k8s-resume-challenge
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: k8s-resume-challenge
+  labels:
+    name: k8s-resume-challenge

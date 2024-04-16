@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: website-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: website
+  template:
+    metadata:
+      labels:
+        app: website
+    spec:
+      containers:
+        - name: website
+          image: mjgray84/ecom-v1
+            env:
+            - name: DB_HOST
+              value: mariadb-service
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_USER
+              value: superadmin # TODO: Automate creation of a user for this instead of using the admin user
+            - name: DB_PASSWORD
+              valueFrom:
+              secretKeyRef:
+                name: db-secret
+                key: db-password
+          volumeMounts:
+            - name: db-volume
+              mountPath: /var/lib/mysql
